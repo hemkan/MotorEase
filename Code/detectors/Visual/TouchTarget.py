@@ -22,6 +22,79 @@ def getBounds(inText):
     split[1] = [int(split[1][0]), int(split[1][1])]
     return split
 
+def describeWidgetComponent(class_name):
+    lower_class_name = class_name.lower()
+
+    # Dictionary mapping class names to descriptions
+    widget_map = {
+        'android.widget.button': "Button",
+        'android.widget.checkbox': "Checkbox",
+        'android.widget.radiobutton': "Radio button",
+        'android.widget.switch': "Switch",
+        'android.widget.edittext': "Edit text",
+        'android.widget.imageview': "Image view",
+        'android.widget.progressbar': "Progress bar",
+        'android.widget.seekbar': "Seekbar",
+        'android.widget.spinner': "Spinner",
+        'android.widget.listview': "List view",
+        'android.widget.gridview': "Grid view",
+        'android.widget.linearlayout': "Linear layout",
+        'android.widget.framelayout': "Frame layout",
+        'android.widget.relativelayout': "Relative layout",
+        'android.widget.toolbar': "Toolbar",
+        'android.widget.imagebutton': "Image button",
+        'android.widget.scrollview': "Scroll view",
+        'android.view.view': "View",
+        'android.view.viewgroup': "View group",
+    }
+
+    if lower_class_name in widget_map:
+       return widget_map[lower_class_name]
+
+    return "Unknown widget component"
+
+def describeBounds(bounds, height, width):
+	bounds_values = bounds.strip('[]').split(',')
+	left = int(bounds_values[0])
+	top = int(bounds_values[1].split('][')[0])
+	right = int(bounds_values[-1])
+	bottom = int(bounds_values[-1].split('][')[-1])
+
+	center_x = (left + right) // 2
+	center_y = (top + bottom) // 2
+
+	if center_x < width / 2:
+		horizontal_position = "left"
+	elif center_x > width / 2:
+		horizontal_position = "right"
+	else:
+		horizontal_position = "center"
+
+	if center_y < height / 2:
+		vertical_position = "top"
+	elif center_x > height / 2:
+		vertical_position = "bottom"
+	else:
+		vertical_position = "center"
+
+	position_description = "The element is potions towards the {}-{} corner of the screen.".format(vertical_position, horizontal_position)
+
+	return position_description
+
+def desribe(xml_element):
+	bounds = xml_element.attrib.get('bounds', '')
+	text = xml_element.attrib.get('text', '')
+	component = xml_element.attrib.get('class', '')
+	component_str = describeWidgetComponent(component)
+
+	# Assuming the screen resolution
+	screen_height = 1920
+	screen_width = 1080
+	position_description = describeBounds(bounds)
+
+	print("This component is a {} with text '{}'.".format(component_str, text))
+	print(position_description)
+
 def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 # Load the XML file
 	if ".DS_S" not in xml_path:
@@ -46,6 +119,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 						#print(elements)
 						#print(bounds)
 						interactiveElements.append([elements, 1])
+						describe(elem)
 						violations+=1
 
 					else:
