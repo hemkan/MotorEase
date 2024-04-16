@@ -72,9 +72,11 @@ def RunDetectors(data_folder):
 
 			# display xml code snippet for interactive elements
 			if touchTarget[1] > 0:
-				print("Interactive Elements: ")
-				for elem in touchTarget[3]:
-					print(elem)
+				print("===== Interactive Elements =====")
+
+				for index, elem in enumerate(touchTarget[3]):
+					print("Interactive Element #" + str(index+1) + ": " + str(elem) + "\n")
+					txt.write("Interactive Element #" + str(index+1) + ": " + str(elem) + "\n")
 				print("\n")
 
 			print("===== Running Expanding Elements =====")
