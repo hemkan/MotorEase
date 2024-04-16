@@ -23,8 +23,8 @@ Congfig = importlib.import_module("detectors.Visual.UIED-master.config.CONFIG_UI
 
 def RunDetectors(data_folder):
 	print(">> Extracting Path\n")
-	txt = open("AccessibilityReportTEXT.txt", "a")
-	txt = open("predictions2.txt", "a")
+	txt = open("/output/AccessibilityReport.txt", "a")
+	# txt = open("predictions2.txt", "a")
 	file_extensions = ['.png', '.xml']
 	files = []
 	print(">> Getting Files and Screenshots\n")
@@ -44,7 +44,7 @@ def RunDetectors(data_folder):
 
 
 	model = {}
-	with open("....txt", 'r', encoding='utf-8') as file:
+	with open("/code/glove.6B.100d.txt", 'r', encoding='utf-8') as file:
 		for line in file:
 			parts = line.split()
 			word = parts[0]
@@ -104,7 +104,7 @@ def RunDetectors(data_folder):
 	txt.close()
 
 # set the path to the directory of the Miracle Project
-MotorEase_PATH = ".../"
+MotorEase_PATH = "/"
 os.chdir(MotorEase_PATH)
 
 
