@@ -76,7 +76,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 											violatingElements.append(elements)
 										else:
 											nonViolations += 1
-											interactiveElements.append([elements, 1])
+											interactiveElements.append([elements, 0])
 											
 
 										#print(violations)
