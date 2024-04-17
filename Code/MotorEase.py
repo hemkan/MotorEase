@@ -70,7 +70,7 @@ def RunDetectors(data_folder):
 			print(touchText)  
 			txt.write(touchText + '\n')  
 
-			# display xml code snippet for interactive elements
+			# display xml code snippet for violating elements
 			if touchTarget[1] > 0:
 				print("===== Violating Elements =====")
 
