@@ -80,7 +80,7 @@ This command will allow you to enter the container and use it as a terminal. Thi
 ```
 The python script will run and will take the data from the Data folder and the GloVe embeddings from the sampleGlove.txt file. The program will run and notify the user at every stage. Finally, the logs will show that an accessibility report has been generated, and can be viewed. They can be viewed in the AccessibilityReport.txt file. 
 
-- ALTERNATIVE Step 2: Simply run the command below to run it in the Docker.
+- ALTERNATIVE WAY: Simply run the command below to run it in the Docker.
 ```bash
 docker run -it --rm -v $(pwd)/container_files:/container_files itsarunkv/motorease-arm
 ```
