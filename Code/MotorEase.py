@@ -70,6 +70,15 @@ def RunDetectors(data_folder):
 			print(touchText)  
 			txt.write(touchText + '\n')  
 
+			# display xml code snippet for interactive elements
+			if touchTarget[1] > 0:
+				print("===== Violating Elements =====")
+
+				for index, elem in enumerate(touchTarget[3]):
+					print("Violating Element #" + str(index+1) + ": " + str(elem) + "\n")
+					txt.write("Violating Element #" + str(index+1) + ": " + str(elem) + "\n")
+				print("\n")
+
 			print("===== Running Expanding Elements =====")
 			expanding = detectClosure(image, xml, glove_model_array)
 			expandingText = image + ":\n" + "Expanding Sections Detector>> " +"Expanding elements: " + str(expanding) + "\n"

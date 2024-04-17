@@ -29,6 +29,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 		root = tree.getroot()
 		bounding_boxes = []
 		singleScreenViolations = []
+		violatingElements = []
 
 		violations = 0
 		nonViolations = 0
@@ -44,6 +45,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 					if first <48 or second <48:
 						#print(elements)
 						#print(bounds)
+						violatingElements.append(elements)
 						violations+=1
 
 					else:
@@ -68,6 +70,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 										width = data["compos"][i]['width']
 										if height < 48 or width < 48:
 											violations += 1
+											violatingElements.append(elements)
 										else:
 											nonViolations += 1
 
@@ -78,7 +81,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 										os.remove("./Code/detectors/Visual/UIED-master/data/output/ip/" + file_name)
 								else:
 									os.remove("./Code/detectors/Visual/UIED-master/data/output/ip/" +file_name)
-		return([violations, violations+nonViolations, xml_path])
+		return([violations, violations+nonViolations, xml_path, violatingElements])
 										
 
 						#return([bounds, screenshot_path, elements])
