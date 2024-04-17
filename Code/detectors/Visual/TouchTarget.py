@@ -69,11 +69,10 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 										height = data["compos"][i]['height']
 										width = data["compos"][i]['width']
 										if height < 48 or width < 48:
-											violations += 1
-											interactive_elements.append(elements)
+											violations += 1	
 										else:
 											nonViolations += 1
-											interactive_elements.append(elements)
+										interactive_elements.append(elements)
 
 										#print(violations)
 										#print(nonViolations)
