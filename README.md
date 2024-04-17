@@ -12,7 +12,7 @@ The MotorEase code and data has been permanently archived on Zenodo at: (https:/
 
 ## Setup & Usage
 
-- There are 3 ways to build the project, using Docker (recommended) or a Python Environment
+- "There are three ways to build the project: using Docker within a container (recommended), building locally with Docker, or using a Python environment.
 
 <ins>Docker instructions: </ins>
 
@@ -32,11 +32,11 @@ The MotorEase code and data has been permanently archived on Zenodo at: (https:/
 
 <ins> Build 1: Running the Image with Local Build: </ins>
 
-- With these instructions you will be able to run the Docker Image locally and propagate your changes to the Docker Container automatically.
+- With these instructions you will be able to run the Docker Image locally and propagate your changes to the Docker Container automatically. These set of instructions are for Windows WSL. 
 
 - This build uses the: glove.6B.100d from ```https://github.com/stanfordnlp/GloVe?tab=readme-ov-file#download-pre-trained-word-vectors```so please download the glove embedding here if you would like to use the same model.
-  - Other models can be used and to use those models please change MotorEase.py in the Code directory with the model you would like to use.
-  - This model was chosen becasue it simulated the same results as the original Docker Image. 
+  - Other models can be used and to use those models please change line 47 in Code/MotorEase.py .
+  - This model was chosen because it simulated the same results as the original Docker Image. 
 
 - To build the image run:
  ```bash
@@ -64,30 +64,27 @@ docker run -it --rm -v $(pwd)/Data:/data -v $(pwd)/Code:/code -v $(pwd)/Output:/
 
 - Note 2: The compilation is slow even with a 8-core CPU. So, you may experience a long delay when it comes to both running and building the program.
 
-<ins> Build 2: Running the Image: </ins>
+<ins> Build 2: Running the Image within Docker: </ins>
 
-- In order to run the image on the container, run this command ``` docker run -it --rm -v $(pwd)/container_files:/container_files itsarunkv/motorease-arm /bin/bash ``` (be sure to use the correct "amd" or "arm" image name in this command).
+- These set of instructions are meant for WSL, however, it can be used for PowerShell if you remove the ```$(pwd)``` for it to work.
 
-- This command will allow you to enter the container and use it as a terminal. This will allow you to run ```wget``` commands to download data to the container and modify any existing data within. 
+- Step 1: To the image on the container, run this command and be sure to use the correct "amd" or "arm" image name in this command.
+ ```bash
+  docker run -it --rm -v $(pwd)/container_files:/container_files itsarunkv/motorease-arm /bin/bash 
+  ``` 
+This command will allow you to enter the container and use it as a terminal. This will allow you to run ```wget``` commands to download data to the container and modify any existing data within. 
 
-- In order to run the project, navigate to the ```Code``` directory and run ``` python3 MotorEase.py ```. The python script will run and will take the data from the Data folder and the GloVe embeddings from the sampleGlove.txt file. The program will run and notify the user at every stage. Finally, the logs will show that an accessibility report has been generated, and can be viewed. They can be viewed in the AccessibilityReport.txt file. 
+- Step 2: To run the project enter ```Code``` directory and run:
+```bash
+ python3 MotorEase.py 
+```
+The python script will run and will take the data from the Data folder and the GloVe embeddings from the sampleGlove.txt file. The program will run and notify the user at every stage. Finally, the logs will show that an accessibility report has been generated, and can be viewed. They can be viewed in the AccessibilityReport.txt file. 
 
-- Or, simply run ```docker run -it --rm -v $(pwd)/container_files:/container_files itsarunkv/motorease-arm``` to run it in the docker.
+- ALTERNATIVE Step 2: Simply run the command below to run it in the Docker.
+```bash
+docker run -it --rm -v $(pwd)/container_files:/container_files itsarunkv/motorease-arm
+```
 
-<ins>Reproducing Full Paper Results:</ins>
-
-- Coming Soon, we are uploading the (large) dataset for the full reproduction. 
-
-<ins>Adding Real GloVe Embeddings and Your Own Screen Information:</ins>
-
-- With the inclusion of placeholder data throughout the project, we make it easy to run and check for execution. However, this tool is designed for developers to check Motor accessibility issues within their project. This requires both an authentic GloVe embedding file and screenshots (PNG files) and UI-Automator files (XML) to be in the container. This can be done using the wget command. 
-
-- GloVe embeddings used: ```wget https://nlp.stanford.edu/data/glove.42B.300d.zip```
-
-- Please sneure that the Glove embedding is downloaded to the /MotorEase-main/Code/ folder. When you download your GloVe embedding file, rename it to sampleGlove.txt and delete the placeholder sampleGlove.txt file so that the code can use the real embeddings. The resulting file path for the GloVe embedding file should be: ```/MotorEase-main/Code/gloveSample.txt```
-
-- In order to load your own images, navigate to the Data folder in the container and delete the existing photos. Use the wget command to download your images into the directory so they may be used. 
-  
 <ins> Build 3: Python Environment: </ins>
 
 - These set of instructions is if you would like to run the repository remotely using a Python Environment. 
@@ -122,6 +119,21 @@ pip install -r Code/requirements.txt
   
 - If you would like to run MotorEase on your own screenshot/xml pair, remove existing data in the data folder and add PNG screenshots and their XML files from a single
   application.
+
+<ins>Reproducing Full Paper Results:</ins>
+
+- Coming Soon, we are uploading the (large) dataset for the full reproduction. 
+
+<ins>Adding Real GloVe Embeddings and Your Own Screen Information:</ins>
+
+- With the inclusion of placeholder data throughout the project, we make it easy to run and check for execution. However, this tool is designed for developers to check Motor accessibility issues within their project. This requires both an authentic GloVe embedding file and screenshots (PNG files) and UI-Automator files (XML) to be in the container. This can be done using the wget command. 
+
+- GloVe embeddings used: ```wget https://nlp.stanford.edu/data/glove.42B.300d.zip```
+
+- Please sneure that the Glove embedding is downloaded to the /MotorEase-main/Code/ folder. When you download your GloVe embedding file, rename it to sampleGlove.txt and delete the placeholder sampleGlove.txt file so that the code can use the real embeddings. The resulting file path for the GloVe embedding file should be: ```/MotorEase-main/Code/gloveSample.txt```
+
+- In order to load your own images, navigate to the Data folder in the container and delete the existing photos. Use the wget command to download your images into the directory so they may be used. 
+
 
 
 
