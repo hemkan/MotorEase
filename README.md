@@ -12,7 +12,7 @@ The MotorEase code and data has been permanently archived on Zenodo at: (https:/
 
 ## Setup & Usage
 
-- There are 2 ways to build the project, using Docker (recommended) or a Python Environment
+- There are 3 ways to build the project, using Docker (recommended) or a Python Environment
 
 <ins>Docker instructions: </ins>
 
@@ -30,30 +30,41 @@ The MotorEase code and data has been permanently archived on Zenodo at: (https:/
 
 - This project uses a GloVe embedding for textual similarities. However, GloVe embedding files are large and difficult to host on GitHub. Therefore, we have created a sampleGlove.txt file within the docker container to act as a dummy GloVe model in place of a real one. This text file is formatted the exact same way as a Glove model is normally formatted.
 
-<ins> Running the Image with Local Build: </ins>
+<ins> Build 1: Running the Image with Local Build: </ins>
 
 - With these instructions you will be able to run the Docker Image locally and propagate your changes to the Docker Container automatically.
 
-- This build uses the: glove.6B.100d from ```https://github.com/stanfordnlp/GloVe?tab=readme-ov-file#download-pre-trained-word-vectors```so please download the glove embedding here if you would 
-like to use the same model.
+- This build uses the: glove.6B.100d from ```https://github.com/stanfordnlp/GloVe?tab=readme-ov-file#download-pre-trained-word-vectors```so please download the glove embedding here if you would like to use the same model.
   - Other models can be used and to use those models please change MotorEase.py in the Code directory with the model you would like to use.
   - This model was chosen becasue it simulated the same results as the original Docker Image. 
 
-- Run ```docker build -t motorease Code``` to build the image
+- To build the image run:
+ ```bash
+ docker build -t motorease Code
+ ```
 
-- Run ```docker run -it --rm -v $(pwd)/Data:/data -v $(pwd)/Code:/code -v $(pwd)/Output:/output --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix motorease``` to run a container of the image. Mounting the code directory allows developers to have their changes propagated to docker container automatically.
+- To run a container of the image please run the command below. This command mounts the code directory which allows developers to have their changes propagated to docker container automatically. 
+```bash
+docker run -it --rm -v $(pwd)/Data:/data -v $(pwd)/Code:/code -v $(pwd)/Output:/output --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix motorease
+``` 
 
-- Run ```docker run -it --rm -v $(pwd)/Data:/data -v $(pwd)/Code:/code -v $(pwd)/Output:/output --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix motorease /bin/bash``` to enter a container of the image without running the command to start to program.
+- To enter a container of the image without running the command to start to program:
+```bash
+docker run -it --rm -v $(pwd)/Data:/data -v $(pwd)/Code:/code -v $(pwd)/Output:/output --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix motorease /bin/bash
+``` 
 
-- Run ```docker rmi motorease``` to clean up the image
+- To clean up the image:
+ ```bash
+ docker rmi motorease
+ ```
 
-- Note: Depending on the Glove embedding used, you may need over 64 GB of ram
+- Note 1: Depending on the Glove embedding used, you may need over 64 GB of ram
   - Docker image can easily be over 10 GB
   - When the codes failed, all the memory is still there, meaning, every time you run a 10 GB big model and fail, you have 10 GB allocated ram not released
 
-- Note: The compilation is slow even with a 8-core CPU. So, you may experience a long delay when it comes to both running and building the program.
+- Note 2: The compilation is slow even with a 8-core CPU. So, you may experience a long delay when it comes to both running and building the program.
 
-<ins>Running the Image: </ins>
+<ins> Build 2: Running the Image: </ins>
 
 - In order to run the image on the container, run this command ``` docker run -it --rm -v $(pwd)/container_files:/container_files itsarunkv/motorease-arm /bin/bash ``` (be sure to use the correct "amd" or "arm" image name in this command).
 
@@ -77,17 +88,35 @@ like to use the same model.
 
 - In order to load your own images, navigate to the Data folder in the container and delete the existing photos. Use the wget command to download your images into the directory so they may be used. 
   
-<ins>Python Environment: </ins>
-- These instructions are do not work.
+<ins> Build 3: Python Environment: </ins>
 
-- Go to line 107 in the MotorEase.py file and change the file path to the folder that holds the code and data folders
+- These set of instructions is if you would like to run the repository remotely using a Python Environment. 
+
+- Step 1: Go to line 107 in the MotorEase.py file and change the file path to the folder that holds the code and data folders
   
-- Go to line 47 and add the file path for your Glove Embeddings txt file. MotorEase requires glove embeddings to work, and needs the download for the model. The model is large and not able to be hosted on GitHub. Please visit https://nlp.stanford.edu/projects/glove/ and download 1 of the 4 available options.
+- Step 2: Go to line 47 and add the file path for your Glove Embeddings txt file. MotorEase requires glove embeddings to work, and needs the download for the model. The model is large and not able to be hosted on GitHub. Please visit https://nlp.stanford.edu/projects/glove/ and download 1 of the 4 available options.
 - ```Python Version: 3.9.13```
 
 - ```Pip Version: 23.3.2```
 
-- Using Environment: The Code directory will have a requirements.txt file that lists all required packages for MotorEase to run. In your command line, create a new python environment: ``` python3 -m venv .venv``` Once your environment is created, activate it with this command: ```source .venv/bin/activate```. Use this command to download all of the dependencies into your virtual environment:  ```pip install -r Code/requirements.txt```. Once the requirements are installed and there are PNG and XML files in the Data folder, run MotorEase using this command: ```python3 MotorEase.py```
+- Using Environment: The Code directory will have a requirements.txt file that lists all required packages for MotorEase to run. 
+
+- Step 3: In your command line, create a new python environment:
+ ```bash
+ python3 -m venv .venv
+ ``` 
+- Step 4: Once your environment is created, activate it with this command:
+ ```bash
+ source .venv/bin/activate
+ ```
+- Step 5: Use this command to download all of the dependencies into your virtual environment:  
+```bash
+pip install -r Code/requirements.txt
+``` 
+- Step 6: Once the requirements are installed and there are PNG and XML files in the Data folder, run MotorEase using this command:
+ ```bash
+ python3 MotorEase.py
+ ```
   
 - The output of either method will be a file with the Motor impairment accessibility guideline violations, AccessibilityReport.txt
   
