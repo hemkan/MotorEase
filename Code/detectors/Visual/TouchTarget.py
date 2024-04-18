@@ -81,7 +81,7 @@ def describeBounds(bounds, height, width):
 
 	return position_description
 
-def desribe(xml_element):
+def describe_violating(xml_element):
 	bounds = xml_element.attrib.get('bounds', '')
 	text = xml_element.attrib.get('text', '')
 	component = xml_element.attrib.get('class', '')
@@ -90,9 +90,9 @@ def desribe(xml_element):
 	# Assuming the screen resolution
 	screen_height = 1920
 	screen_width = 1080
-	position_description = describeBounds(bounds)
+	position_description = describeBounds(bounds, screen_height, screen_width)
 
-	print("This component is a {} with text '{}'.".format(component_str, text))
+	print("This violating component is a {} with text '{}'.".format(component_str, text))
 	print(position_description)
 
 def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
@@ -119,7 +119,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 						#print(elements)
 						#print(bounds)
 						interactiveElements.append([elements, 1])
-						describe(elem)
+						describe_violating(elem)
 						violations+=1
 
 					else:
@@ -143,6 +143,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 										height = data["compos"][i]['height']
 										width = data["compos"][i]['width']
 										if height < 48 or width < 48:
+											describe_violating(elem)
 											violations += 1
 											interactiveElements.append([elements, 1])
 										else:
