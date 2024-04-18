@@ -81,7 +81,7 @@ def describeBounds(bounds, height, width):
 
 	return position_description
 
-def describe_violating(xml_element):
+def describe(xml_element, violating_flag):
 	bounds = xml_element.attrib.get('bounds', '')
 	text = xml_element.attrib.get('text', '')
 	component = xml_element.attrib.get('class', '')
@@ -92,7 +92,11 @@ def describe_violating(xml_element):
 	screen_width = 1080
 	position_description = describeBounds(bounds, screen_height, screen_width)
 
-	print("This violating component is a {} with text '{}'.".format(component_str, text))
+	if violating_flag:
+		print("This violating component is a {} with text '{}'.".format(component_str, text))
+	else:
+		print("This interactive component is a {} with text '{}'.".format(component_str, text))
+
 	print(position_description)
 
 def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
@@ -119,9 +123,9 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 						#print(elements)
 						#print(bounds)
 						interactiveElements.append([elements, 1])
-						describe_violating(elem)
+						describe(elem, violating_flag=True)
+						describe(elem, violating_flag=False)
 						violations+=1
-
 					else:
 						
 						im = Image.open(screenshot_path)
@@ -143,13 +147,14 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 										height = data["compos"][i]['height']
 										width = data["compos"][i]['width']
 										if height < 48 or width < 48:
-											describe_violating(elem)
+											describe(elem, violating_flag=True)
 											violations += 1
 											interactiveElements.append([elements, 1])
 										else:
 											nonViolations += 1
 											interactiveElements.append([elements, 0])
 
+										describe(elem, violating_flag=False)
 										#print(violations)
 										#print(nonViolations)
 
