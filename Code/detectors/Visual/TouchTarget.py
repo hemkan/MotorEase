@@ -82,7 +82,7 @@ def checkTouchTarget(screenshot_path, xml_path, min_size=(48, 48)):
 										os.remove("/code/detectors/Visual/UIED-master/data/output/ip/" + file_name)
 								else:
 									os.remove("/code/detectors/Visual/UIED-master/data/output/ip/" +file_name)
-		return([violations, violations+nonViolations, xml_path])
+		return([violations, violations+nonViolations, xml_path, interactiveElements])
 									
 										
 
