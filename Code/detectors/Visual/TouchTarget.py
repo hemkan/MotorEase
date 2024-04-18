@@ -77,7 +77,7 @@ def describeBounds(bounds, height, width):
 	else:
 		vertical_position = "center"
 
-	position_description = "The element is potions towards the {}-{} corner of the screen.".format(vertical_position, horizontal_position)
+	position_description = "The element is positioned towards the {}-{} corner of the screen.".format(vertical_position, horizontal_position)
 
 	return position_description
 
